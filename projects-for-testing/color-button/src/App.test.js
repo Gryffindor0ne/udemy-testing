@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
+import { logRoles } from "@testing-library/dom";
 import App from "./App";
 
 test("button has correct initial color", () => {
-  render(<App />);
+  const { container } = render(<App />);
+  logRoles(container);
 
   const colorButton = screen.getByRole("button", { name: "Change to blue" });
   expect(colorButton).toHaveStyle({ backgroundColor: "red" });
