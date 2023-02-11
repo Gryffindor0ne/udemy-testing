@@ -1,13 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Options from "../options";
+import { OrderDetailsProvider } from "../../../context/OrderDetails";
 
 test("update scoop subtotal when scoops change", async () => {
   const user = userEvent.setup();
-  render(<Options optionType="scoops" />);
+  render(<Options optionType="scoops" />, { wrapper: OrderDetailsProvider });
 
   // 총합이 $0.00에서 시작하는지 테스트
-  const scoopsSubtotal = screen.getByText("Scoop total: $", { exact: false });
+  const scoopsSubtotal = screen.getByText("Scoops total: $", { exact: false });
   expect(scoopsSubtotal).toHaveTextContent("0.00");
 
   // vanilla scoop 1개 추가하고 테스트
