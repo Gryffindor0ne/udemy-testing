@@ -55,13 +55,6 @@ test("update toppings subtotal when toppings change", async () => {
 });
 
 describe("총계", () => {
-  test("총계가 $0.00에서 시작해야 한다.", async () => {
-    render(<OrderEntry />);
-    const grandTotal = screen.getByRole("heading", {
-      name: /grand total: \$/i,
-    });
-    expect(grandTotal).toHaveTextContent("0.00");
-  });
   test("스쿱이 처음 추가되었을 때 총계가 업데이트 되어야 한다.", async () => {
     const user = userEvent.setup();
 
@@ -70,6 +63,7 @@ describe("총계", () => {
     const grandTotal = screen.getByRole("heading", {
       name: /grand total: \$/i,
     });
+    expect(grandTotal).toHaveTextContent("0.00");
 
     const vanillaInput = await screen.findByRole("spinbutton", {
       name: "Vanilla",
