@@ -4,7 +4,7 @@ import { render, screen } from "../../../test-utils/testing-library-utils";
 import Options from "../Options";
 import OrderEntry from "../OrderEntry";
 
-test("update scoop subtotal when scoops change", async () => {
+test("스쿱이 변경되었을 때 스쿱 타이틀이 업데이트 되어야 한다.", async () => {
   const user = userEvent.setup();
   render(<Options optionType="scoops" />);
 
@@ -29,7 +29,7 @@ test("update scoop subtotal when scoops change", async () => {
   expect(scoopsSubtotal).toHaveTextContent("6.00");
 });
 
-test("update toppings subtotal when toppings change", async () => {
+test("토핑이 변경되었을 때 토핑 타이틀이 업데이트 되어야 한다.", async () => {
   const user = userEvent.setup();
   render(<Options optionType="toppings" />);
 
