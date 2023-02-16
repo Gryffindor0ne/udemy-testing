@@ -1,8 +1,9 @@
+import React from "react";
 import SummaryForm from "./SummaryForm";
 import { useOrderDetails } from "../../context/OrderDetails";
 import { formatCurrency } from "../../utilities";
 
-export default function OrderSummany() {
+export default function OrderSummany({ setOrderPhase }) {
   const { totals, optionCounts } = useOrderDetails();
 
   const scoopArray = Object.entries(optionCounts.scoops); // [['chocolate',2], ['vanilla',1]]
@@ -12,17 +13,17 @@ export default function OrderSummany() {
     </li>
   ));
 
-  const toppingArray = Object.key(optionCounts.toppings); // ['M&Ms', 'Gummi Bear']
+  const toppingArray = Object.keys(optionCounts.toppings); // ['M&Ms', 'Gummi Bear']
   const toppingList = toppingArray.map((key) => <li key={key}>{key}</li>);
 
   return (
     <div>
-      <h1>OrderSummary</h1>
+      <h1>Order Summary</h1>
       <h2>Scoops: {formatCurrency(totals.scoops)}</h2>
       <ul>{scoopList}</ul>
       <h2>Toppings: {formatCurrency(totals.toppings)}</h2>
       <ul>{toppingList}</ul>
-      <SummaryForm />
+      <SummaryForm setOrderPhase={setOrderPhase} />
     </div>
   );
 }

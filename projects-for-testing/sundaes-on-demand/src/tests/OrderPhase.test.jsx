@@ -6,6 +6,7 @@ import App from "../App";
 test("order phases for happy path", async () => {
   // 앱을 랜더링한다
   const user = userEvent.setup();
+
   render(<App />);
 
   // 아이스크림 스쿱과 토핑을 추가한다
@@ -42,6 +43,7 @@ test("order phases for happy path", async () => {
   });
   expect(toppingsHeading).toBeInTheDocument();
 
+  // 옵션 아이템 확인한다
   expect(screen.getByText("1 Vanilla")).toBeInTheDocument();
   expect(screen.getByText("2 Chocolate")).toBeInTheDocument();
   expect(screen.getByText("Cherries")).toBeInTheDocument();
@@ -63,6 +65,8 @@ test("order phases for happy path", async () => {
   await user.click(confirmOrderButton);
 
   // 확인페이지에서 주문 번호 있는지 확인한다
+  // this one is async because there is a POST request to server in between summary
+  //    and confirmation pages
 
   const thankYouHeader = await screen.findByRole("heading", {
     name: /thank you/i,
