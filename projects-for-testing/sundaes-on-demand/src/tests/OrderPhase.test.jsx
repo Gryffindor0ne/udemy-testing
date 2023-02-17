@@ -97,3 +97,35 @@ test("order phases for happy path", async () => {
   await screen.findByRole("spinbutton", { name: "Vanilla" });
   await screen.findByRole("checkbox", { name: "Cherries" });
 });
+
+test("토핑을 주문하지 않은 경우 토핑 헤더가 요약 페이지에 표시되지 않습니다.", async () => {
+  const user = userEvent.setup();
+
+  render(<App />);
+
+  // 바닐라와 초콜렛 스쿱을 추가한다
+  const vanillaInput = await screen.findByRole("spinbutton", {
+    name: "Vanilla",
+  });
+  await user.clear(vanillaInput);
+  await user.type(vanillaInput, "1");
+
+  const chocolateInput = screen.getByRole("spinbutton", { name: "Chocolate" });
+  await user.clear(chocolateInput);
+  await user.type(chocolateInput, "2");
+
+  //주문버튼을 클릭한다
+  const orderSummaryButton = screen.getByRole("button", {
+    name: /order sundae/i,
+  });
+  await user.click(orderSummaryButton);
+
+  //원하는 테스트를 실행한다
+  // 스쿱 정보가 맞는지 확인한다
+  const scoopsHeading = screen.getByRole("heading", { name: "Scoops: $6.00" });
+  expect(scoopsHeading).toBeInTheDocument();
+
+  // 토핑 정보가 없는지 확인한다
+  const toppingsHeading = screen.queryByRole("heading", { name: /toppings/i });
+  expect(toppingsHeading).not.toBeInTheDocument();
+});
